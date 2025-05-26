@@ -12,7 +12,7 @@ public class Mezzo {
     @Id
     @GeneratedValue
     @Column(name = "id_mezzo")
-    private int idMezzo;
+    private int id;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_mezzo")
@@ -61,12 +61,12 @@ public class Mezzo {
     //Get e set
 
 
-    public int getIdMezzo() {
-        return idMezzo;
+    public int getId() {
+        return id;
     }
 
-    public void setIdMezzo(int idMezzo) {
-        this.idMezzo = idMezzo;
+    public void setId(int idMezzo) {
+        this.id = idMezzo;
     }
 
     public TipoMezzo getTipoMezzo() {
@@ -139,7 +139,7 @@ public class Mezzo {
     @Override
     public String toString() {
         return "Mezzo{" +
-                "idMezzo=" + idMezzo +
+                "idMezzo=" + id +
                 ", tipoMezzo=" + tipoMezzo +
                 ", statoMezzo=" + statoMezzo +
                 ", capienza=" + capienza +
