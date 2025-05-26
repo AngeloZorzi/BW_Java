@@ -1,4 +1,84 @@
 package entities;
 
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "biglietti")
 public class Biglietto {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String codiceUnivoco;
+
+    private boolean vidimato;
+
+    @Column(name = "data_emissione", nullable = false)
+    private LocalDateTime dataEmissione;
+
+    @Column(name = "data_vidimazione")
+    private LocalDateTime dataVidimazione;
+
+    @ManyToOne
+    @JoinColumn(name = "punto_emissione_id") // nome della colonna chiave esterna
+    private PuntoEmissione puntoEmissione;
+
+    @ManyToOne
+    @JoinColumn(name = "mezzo_id")
+    private Mezzo mezzo;
+
+
+    public Biglietto() {}
+
+    public Biglietto(String codiceUnivoco, PuntoEmissione puntoEmissione) {
+        this.codiceUnivoco = codiceUnivoco;
+        this.vidimato = false;
+        this.dataEmissione = LocalDateTime.now();
+        this.puntoEmissione = puntoEmissione;
+    }
+
+
+    public void valida(Mezzo mezzo) {
+        this.vidimato = true;
+        this.dataVidimazione = LocalDateTime.now();
+        this.mezzo = mezzo;
+    }
+
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getCodiceUnivoco() { return codiceUnivoco; }
+    public void setCodiceUnivoco(String codiceUnivoco) { this.codiceUnivoco = codiceUnivoco; }
+
+    public boolean isVidimato() { return vidimato; }
+    public void setVidimato(boolean vidimato) { this.vidimato = vidimato; }
+
+    public LocalDateTime getDataEmissione() { return dataEmissione; }
+    public void setDataEmissione(LocalDateTime dataEmissione) { this.dataEmissione = dataEmissione; }
+
+    public LocalDateTime getDataVidimazione() { return dataVidimazione; }
+    public void setDataVidimazione(LocalDateTime dataVidimazione) { this.dataVidimazione = dataVidimazione; }
+
+    public PuntoEmissione getPuntoEmissione() { return puntoEmissione; }
+    public void setPuntoEmissione(PuntoEmissione puntoEmissione) { this.puntoEmissione = puntoEmissione; }
+
+    public Mezzo getMezzo() { return mezzo; }
+    public void setMezzo(Mezzo mezzo) { this.mezzo = mezzo; }
+
+    @Override
+    public String toString() {
+        return "Biglietto{" +
+                "id=" + id +
+                ", codiceUnivoco='" + codiceUnivoco + '\'' +
+                ", vidimato=" + vidimato +
+                ", dataEmissione=" + dataEmissione +
+                ", dataVidimazione=" + dataVidimazione +
+                ", puntoEmissione=" + (puntoEmissione != null ? puntoEmissione.getId() : null) +
+                ", mezzo=" + (mezzo != null ? mezzo.getId() : null) +
+                '}';
+    }
 }
