@@ -20,12 +20,12 @@ public class MezzoDao {
         em.getTransaction().commit();
     }
 
-    public Mezzo getById(int id){
+    public Mezzo getId(int id){
         return em.find(Mezzo.class,id);
     }
 
     public void rimuoviMezzo(int id){
-        Mezzo m = getById(id);
+        Mezzo m = getId(id);
         if (m !=null){
             em.getTransaction().begin();
             em.remove(m);
