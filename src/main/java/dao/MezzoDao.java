@@ -35,4 +35,21 @@ public class MezzoDao {
         }
     }
 
+    public long contaPeriodiManutenzione(int idMezzo) {
+        return em.createQuery("SELECT COUNT(pm) FROM PeriodoManutenzione pm WHERE pm.mezzo.id = :id", Long.class)
+                .setParameter("id", idMezzo)
+                .getSingleResult();
+    }
+
+    public long contaPeriodiServizio(int idMezzo) {
+        return em.createQuery("SELECT COUNT(ps) FROM PeriodoServizio ps WHERE ps.mezzo.id = :id", Long.class)
+                .setParameter("id", idMezzo)
+                .getSingleResult();
+    }
+
+    public long tempoTotaleServizio(int idMezzo) {
+        return em.createQuery("SELECT SUM(DATEDIFF(ps.dataFine, ps.dataInizio)) FROM PeriodoServizio ps WHERE ps.mezzo.id = :id", Long.class)
+                .setParameter("id", idMezzo)
+                .getSingleResult();
+    }
 }
