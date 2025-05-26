@@ -5,11 +5,11 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-public class MezzoDao {
+public class MezzoDAO {
     private EntityManager em;
 
 
-    public MezzoDao() {
+    public MezzoDAO() {
         EntityManagerFactory emf= Persistence.createEntityManagerFactory("****");
         em = emf.createEntityManager();
     }

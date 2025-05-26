@@ -1,18 +1,17 @@
 package dao;
 
-import entities.Mezzo;
 import entities.PeriodoManutenzione;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-public class PeriodoManutenzioneDao {
+public class PeriodoManutenzioneDAO {
 
 
     private EntityManager em;
 
 
-    public PeriodoManutenzioneDao() {
+    public PeriodoManutenzioneDAO() {
         EntityManagerFactory emf= Persistence.createEntityManagerFactory("****");
         em = emf.createEntityManager();
     }
