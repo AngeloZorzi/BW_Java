@@ -20,4 +20,18 @@ public class TesseraDAO {
     public Tessera trovaPerId(Long id) {
         return em.find(Tessera.class, id);
     }
+
+    public void rinnovaTessera(Long idTessera) {
+        Tessera tessera = trovaPerId(idTessera);
+        if (tessera != null) {
+            em.getTransaction().begin();
+            tessera.aggiornaValidita();  // Questo metodo aggiorna la validità di un anno
+            em.getTransaction().commit();
+        }
+    }
+
+    public boolean isTesseraValida(Long idTessera) {
+        Tessera tessera = trovaPerId(idTessera);
+        return tessera != null && tessera.isValid();
+    }
 }

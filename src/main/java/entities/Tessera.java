@@ -26,6 +26,11 @@ public class Tessera {
         return attiva && LocalDate.now().isBefore(data_scadenza);
     }
 
+    public void aggiornaValidita() {
+        this.data_emissione = LocalDate.now();
+        this.data_scadenza = this.data_emissione.plusYears(1);
+    }
+
     public void rinnova() {
         this.data_emissione = LocalDate.now();
         this.data_scadenza = data_emissione.plusYears(1);
