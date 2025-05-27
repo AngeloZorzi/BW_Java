@@ -23,7 +23,7 @@ public class Biglietto {
     private LocalDateTime dataVidimazione;
 
     @ManyToOne
-    @JoinColumn(name = "punto_emissione_id") // nome della colonna chiave esterna
+    @JoinColumn(name = "punto_emissione_id") 
     private PuntoEmissione puntoEmissione;
 
     @ManyToOne
