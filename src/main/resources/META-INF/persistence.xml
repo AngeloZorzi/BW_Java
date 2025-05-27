@@ -1,18 +1,23 @@
 <persistence version="2.1"
              xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-    <persistence-unit name="****" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="gestionetrasporti" transaction-type="RESOURCE_LOCAL">
 
-        <class>com.bw.entities.Biglietto</class>
-        <class>com.bw.entities.PuntoEmissione</class>
-        <class>com.bw.entities.DistributoreAutomatico</class>
-        <class>com.bw.entities.RivenditoreAutorizzato</class>
+        <class>entities.Utente</class>
+        <class>entities.Tessera</class>
+        <class>entities.Biglietto</class>
+        <class>entities.Abbonamento</class>
+        <class>entities.Mezzo</class>
+        <class>entities.Tratta</class>
+        <class>entities.PuntoEmissione</class>
+        <class>entities.PeriodoServizio</class>
+        <class>entities.PeriodoManutenzione</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/***" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/gestionetrasporti" />
             <property name="javax.persistence.jdbc.user" value="postgres" />
-            <property name="javax.persistence.jdbc.password" value="***!"/>
+            <property name="javax.persistence.jdbc.password" value="****"/>
             <property name="hibernate.default_schema" value="public" />
             <property name="hibernate.hbm2ddl.auto" value="update" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />

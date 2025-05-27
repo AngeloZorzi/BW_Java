@@ -12,7 +12,7 @@ public class Mezzo {
     @Id
     @GeneratedValue
     @Column(name = "id_mezzo")
-    private int id;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_mezzo")
@@ -51,7 +51,6 @@ public class Mezzo {
         } else {
             this.capienza = 350;
         }
-        ;
         this.numeroIdentificativo = numeroIdentificativo;
     }
 
@@ -61,11 +60,11 @@ public class Mezzo {
     //Get e set
 
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int idMezzo) {
+    public void setId(Long idMezzo) {
         this.id = idMezzo;
     }
 

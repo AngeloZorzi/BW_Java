@@ -1,9 +1,9 @@
 package dao;
+
 import entities.PercorrenzaTratta;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import java.util.List;
-
 
 public class PercorrenzaTrattaDAO {
     private final EntityManager em;
@@ -12,18 +12,8 @@ public class PercorrenzaTrattaDAO {
         this.em = em;
     }
 
-
     public void salva(PercorrenzaTratta percorrenzaTratta) {
-        em.getTransaction().begin();
-        try {
-            em.persist(percorrenzaTratta);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw e;
-        }
+        em.persist(percorrenzaTratta);
     }
 
     public PercorrenzaTratta trovaPerId(Integer id) {
@@ -35,34 +25,11 @@ public class PercorrenzaTrattaDAO {
         return query.getResultList();
     }
 
-
-
     public PercorrenzaTratta aggiorna(PercorrenzaTratta percorrenzaTratta) {
-        em.getTransaction().begin();
-        PercorrenzaTratta mergedPercorrenza = null;
-        try {
-            mergedPercorrenza = em.merge(percorrenzaTratta);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw e;
-        }
-        return mergedPercorrenza;
+        return em.merge(percorrenzaTratta);
     }
 
-
     public void elimina(PercorrenzaTratta percorrenzaTratta) {
-        em.getTransaction().begin();
-        try {
-            em.remove(em.contains(percorrenzaTratta) ? percorrenzaTratta : em.merge(percorrenzaTratta));
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw e;
-        }
+        em.remove(em.contains(percorrenzaTratta) ? percorrenzaTratta : em.merge(percorrenzaTratta));
     }
 }

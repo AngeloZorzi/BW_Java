@@ -36,6 +36,12 @@ public class Tessera {
         this.data_scadenza = data_emissione.plusYears(1);
         this.attiva = true;
     }
+    public Tessera(LocalDate dataEmissione, Utente utente) {
+        this.data_emissione = dataEmissione;
+        this.data_scadenza = dataEmissione.plusYears(1);
+        this.attiva = true;
+        this.utente = utente;
+    }
 
     // Getters & Setters
     public Tessera (){}

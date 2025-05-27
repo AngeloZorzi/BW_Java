@@ -4,10 +4,6 @@ import entities.Abbonamento;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
-import entities.Abbonamento;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,9 +16,7 @@ public class AbbonamentoDAO {
     }
 
     public void salva(Abbonamento abbonamento) {
-        em.getTransaction().begin();
         em.persist(abbonamento);
-        em.getTransaction().commit();
     }
 
     public Abbonamento trovaPerId(Long id) {

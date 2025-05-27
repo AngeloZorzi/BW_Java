@@ -11,16 +11,7 @@ public class TrattaDAO {
         this.em = em;
     }
     public void salva(Tratta tratta) {
-        em.getTransaction().begin();
-        try {
-            em.persist(tratta);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw e;
-        }
+        em.persist(tratta);
     }
 
 
@@ -35,31 +26,11 @@ public class TrattaDAO {
     }
 
     public Tratta aggiorna(Tratta tratta) {
-        em.getTransaction().begin();
-        Tratta mergedTratta = null;
-        try {
-            mergedTratta = em.merge(tratta);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw e;
-        }
-        return mergedTratta;
+        return em.merge(tratta);
     }
 
 
     public void elimina(Tratta tratta) {
-        em.getTransaction().begin();
-        try {
-            em.remove(em.contains(tratta) ? tratta : em.merge(tratta));
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            throw e;
-        }
+        em.remove(em.contains(tratta) ? tratta : em.merge(tratta));
     }
 }

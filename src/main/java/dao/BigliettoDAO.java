@@ -9,23 +9,14 @@ import java.util.List;
 
 public class BigliettoDAO {
 
-    private EntityManager em;
+    private final EntityManager em;
 
     public BigliettoDAO(EntityManager em) {
         this.em = em;
     }
 
     public void save(Biglietto b) {
-        try {
-            em.getTransaction().begin();
-            em.persist(b);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        }
+        em.persist(b);
     }
 
     public List<Biglietto> findAll() {
@@ -52,5 +43,17 @@ public class BigliettoDAO {
                 .setParameter("end", end)
                 .getSingleResult();
     }
-}
 
+    public List<Biglietto> findByTesseraId(Long tesseraId) {
+        TypedQuery<Biglietto> query = em.createQuery(
+                "SELECT b FROM Biglietto b WHERE b.tessera.id_tessera = :idTessera ORDER BY b.dataEmissione DESC",
+                Biglietto.class
+        );
+        query.setParameter("idTessera", tesseraId);
+        return query.getResultList();
+    }
+
+    public Biglietto getById(Long id) {
+        return em.find(Biglietto.class, id);
+    }
+}

@@ -2,6 +2,7 @@ package entities;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "biglietti")
@@ -23,23 +24,28 @@ public class Biglietto {
     private LocalDateTime dataVidimazione;
 
     @ManyToOne
-    @JoinColumn(name = "punto_emissione_id") 
+    @JoinColumn(name = "punto_emissione_id")
     private PuntoEmissione puntoEmissione;
 
     @ManyToOne
     @JoinColumn(name = "mezzo_id")
     private Mezzo mezzo;
 
+    @ManyToOne
+    @JoinColumn(name = "tessera_id")
+    private Tessera tessera;
 
-    public Biglietto() {}
-
-    public Biglietto(String codiceUnivoco, PuntoEmissione puntoEmissione) {
-        this.codiceUnivoco = codiceUnivoco;
+    public Biglietto() {
+        this.codiceUnivoco = UUID.randomUUID().toString();
         this.vidimato = false;
         this.dataEmissione = LocalDateTime.now();
-        this.puntoEmissione = puntoEmissione;
     }
 
+    public Biglietto(PuntoEmissione puntoEmissione, Tessera tessera) {
+        this();
+        this.puntoEmissione = puntoEmissione;
+        this.tessera = tessera;
+    }
 
     public void valida(Mezzo mezzo) {
         this.vidimato = true;
@@ -47,6 +53,7 @@ public class Biglietto {
         this.mezzo = mezzo;
     }
 
+    // Getters e setters
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -69,6 +76,9 @@ public class Biglietto {
     public Mezzo getMezzo() { return mezzo; }
     public void setMezzo(Mezzo mezzo) { this.mezzo = mezzo; }
 
+    public Tessera getTessera() { return tessera; }
+    public void setTessera(Tessera tessera) { this.tessera = tessera; }
+
     @Override
     public String toString() {
         return "Biglietto{" +
@@ -79,6 +89,7 @@ public class Biglietto {
                 ", dataVidimazione=" + dataVidimazione +
                 ", puntoEmissione=" + (puntoEmissione != null ? puntoEmissione.getId() : null) +
                 ", mezzo=" + (mezzo != null ? mezzo.getId() : null) +
+                ", tessera=" + (tessera != null ? tessera.getId_tessera() : null) +
                 '}';
     }
 }
