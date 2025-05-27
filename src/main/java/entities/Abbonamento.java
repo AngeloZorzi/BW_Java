@@ -22,15 +22,21 @@ public class Abbonamento {
     @JoinColumn(name = "id_tessera")
     private Tessera tessera;
 
+    @ManyToOne
+    @JoinColumn(name = "id_punto_emissione")
+    private PuntoEmissione puntoEmissione;
+
+
     // Getters, Setters
     public Abbonamento (){}
 
-    public Abbonamento(Long codice_univoco, TipoAbbonamento tipo, LocalDate data_inizio_validita, LocalDate data_fine_validita, Tessera tessera) {
+    public Abbonamento(Long codice_univoco, TipoAbbonamento tipo, LocalDate data_inizio_validita, LocalDate data_fine_validita, Tessera tessera, PuntoEmissione puntoEmissione) {
         this.codice_univoco = codice_univoco;
         this.tipo = tipo;
         this.data_inizio_validita = data_inizio_validita;
         this.data_fine_validita = data_fine_validita;
         this.tessera = tessera;
+        this.puntoEmissione = puntoEmissione;
     }
 
     public Long getCodice_univoco() {
@@ -71,6 +77,14 @@ public class Abbonamento {
 
     public void setTessera(Tessera tessera) {
         this.tessera = tessera;
+    }
+
+    public PuntoEmissione getPuntoEmissione() {
+        return puntoEmissione;
+    }
+
+    public void setPuntoEmissione(PuntoEmissione puntoEmissione) {
+        this.puntoEmissione = puntoEmissione;
     }
 
     public boolean isValid() {
