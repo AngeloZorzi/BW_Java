@@ -16,6 +16,9 @@ private int idServizio;
     @ManyToOne
     @JoinColumn(name = "mezzo_id")
 private Mezzo mezzo;
+    @ManyToOne
+    @JoinColumn(name = "tratta_id")
+    private Tratta tratta;
 
 
 @Column(name = "data_inizio")
@@ -26,10 +29,11 @@ private LocalDate dataFine;
 
 //Costruttori
 
-    public PeriodoServizio( LocalDate dataInizio, LocalDate dataFine) {
-
+    public PeriodoServizio(LocalDate dataInizio, LocalDate dataFine, Mezzo mezzo, Tratta tratta) {
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
+        this.mezzo = mezzo;
+        this.tratta = tratta;
     }
 
     public PeriodoServizio() {

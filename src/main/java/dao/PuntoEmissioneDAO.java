@@ -3,6 +3,8 @@ package dao;
 import entities.PuntoEmissione;
 import jakarta.persistence.EntityManager;
 
+import java.util.List;
+
 public class PuntoEmissioneDAO {
 
     private EntityManager em;
@@ -17,5 +19,8 @@ public class PuntoEmissioneDAO {
 
     public PuntoEmissione findById(Long id) {
         return em.find(PuntoEmissione.class, id);
+    }
+    public List<PuntoEmissione> findAll() {
+        return em.createQuery("SELECT p FROM PuntoEmissione p", PuntoEmissione.class).getResultList();
     }
 }
