@@ -18,6 +18,9 @@ public class BigliettoDAO {
     public void save(Biglietto b) {
         em.persist(b);
     }
+    public void update(Biglietto biglietto) {
+        em.merge(biglietto);
+    }
 
     public List<Biglietto> findAll() {
         return em.createQuery("SELECT b FROM Biglietto b", Biglietto.class).getResultList();

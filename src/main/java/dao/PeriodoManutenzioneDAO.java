@@ -5,6 +5,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import java.time.LocalDate;
+
 public class PeriodoManutenzioneDAO {
 
 
@@ -41,5 +43,14 @@ public class PeriodoManutenzioneDAO {
                 .setParameter("idMezzo", idMezzo)
                 .getSingleResult();
         return count != null ? count : 0;
+    }
+    public boolean isInManutenzione(Long mezzoId, LocalDate data) {
+        String jpql = "SELECT COUNT(pm) FROM PeriodoManutenzione pm " +
+                "WHERE pm.mezzo.id = :idMezzo AND :data BETWEEN pm.dataInizio AND pm.dataFine";
+        Long count = em.createQuery(jpql, Long.class)
+                .setParameter("idMezzo", mezzoId)
+                .setParameter("data", data)
+                .getSingleResult();
+        return count != null && count > 0;
     }
 }

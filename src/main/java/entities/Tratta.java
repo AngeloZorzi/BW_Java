@@ -90,7 +90,7 @@ public class Tratta {
         return percorrenzeTratta;
     }
 
-    public void setPercorrenzeTratta(List<PercorrenzaTratta> percorrenzeTratta) {
+    public void setPercorrenzeTratta(List percorrenzeTratta) {
         this.percorrenzeTratta = percorrenzeTratta;
     }
 

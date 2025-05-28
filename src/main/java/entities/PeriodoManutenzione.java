@@ -25,10 +25,10 @@ public class PeriodoManutenzione {
     //Costruttori
 
 
-    public PeriodoManutenzione( LocalDate dataInizio, LocalDate dataFine) {
-
+    public PeriodoManutenzione(LocalDate dataInizio, LocalDate dataFine, Mezzo mezzo) {
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
+        this.mezzo = mezzo;
     }
 
     public PeriodoManutenzione() {

@@ -3,6 +3,7 @@ package dao;
 import entities.Mezzo;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDate;
+import java.util.List;
 
 public class MezzoDAO {
     private EntityManager em;
@@ -61,6 +62,10 @@ public class MezzoDAO {
                         "SELECT COUNT(t) FROM TrattaPercorsa t WHERE t.mezzo.id = :id", Long.class)
                 .setParameter("id", idMezzo)
                 .getSingleResult();
+    }
+
+    public List<Mezzo> findAll() {
+        return em.createQuery("SELECT m FROM Mezzo m", Mezzo.class).getResultList();
     }
 
 }

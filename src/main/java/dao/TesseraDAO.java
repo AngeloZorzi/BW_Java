@@ -3,6 +3,8 @@ package dao;
 import entities.Tessera;
 import jakarta.persistence.EntityManager;
 
+import java.util.List;
+
 public class TesseraDAO {
 
     private final EntityManager em;
@@ -13,6 +15,12 @@ public class TesseraDAO {
 
     public void save(Tessera tessera) {
         em.persist(tessera);
+    }
+
+    public List<Tessera> findByUtenteId(Long utenteId) {
+        return em.createQuery("SELECT t FROM Tessera t WHERE t.utente.id = :utenteId", Tessera.class)
+                .setParameter("utenteId", utenteId)
+                .getResultList();
     }
 
 
