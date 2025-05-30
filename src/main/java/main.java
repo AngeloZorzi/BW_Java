@@ -163,6 +163,7 @@ public class main {
             System.out.println("4. Visualizza Tessera");
             System.out.println("5. Visualizza Biglietti");
             System.out.println("6. Visualizza Abbonamenti");
+            System.out.println("7. Valida Biglietti");
             System.out.println("0. Logout");
             System.out.print("Scelta: ");
 
@@ -187,6 +188,9 @@ public class main {
                     break;
                 case 6:
                     viewSubscriptions();
+                    break;
+                case 7:
+                    validateTicket();
                     break;
                 case 0:
                     back = true;
