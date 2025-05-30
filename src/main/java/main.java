@@ -559,46 +559,74 @@ public class main {
             return;
         }
 
-        List<Tessera> tessere = gestore.getTessereByUtente(loggedInUser.getId_utente());
-        if (tessere.isEmpty()) {
-            System.out.println("Devi prima creare una tessera.");
-            return;
+        try {
+            // Inizia la transazione
+            em.getTransaction().begin();
+
+            List<Tessera> tessere = gestore.getTessereByUtente(loggedInUser.getId_utente());
+            if (tessere.isEmpty()) {
+                System.out.println("Devi prima creare una tessera.");
+                em.getTransaction().rollback();
+                return;
+            }
+
+            System.out.println("Le tue tessere:");
+            for (Tessera t : tessere) {
+                System.out.println("ID: " + t.getId_tessera() + " - Data emissione: " + t.getData_emissione());
+            }
+
+            System.out.print("Inserisci l'ID della tessera da usare: ");
+            Long idTessera = scanner.nextLong();
+            scanner.nextLine();
+
+            System.out.print("Inserisci l'ID del punto di emissione: ");
+            Long idPuntoEmissione = scanner.nextLong();
+            scanner.nextLine();
+
+            System.out.println("Tipo abbonamento:");
+            System.out.println("1. Settimanale");
+            System.out.println("2. Mensile");
+            System.out.print("Scelta: ");
+            int tipo = scanner.nextInt();
+            scanner.nextLine();
+
+            TipoAbbonamento tipoAbbonamento = (tipo == 1) ? TipoAbbonamento.SETTIMANALE : TipoAbbonamento.MENSILE;
+
+            Tessera tessera = gestore.getTesseraById(idTessera);
+            PuntoEmissione puntoEmissione = gestore.getPuntoEmissioneById(idPuntoEmissione);
+
+            if (tessera == null || puntoEmissione == null) {
+                System.out.println("Tessera o punto di emissione non trovati.");
+                em.getTransaction().rollback();
+                return;
+            }
+
+
+            Abbonamento abbonamento = gestore.generaAbbonamento(tessera, puntoEmissione, tipoAbbonamento);
+
+            if (abbonamento == null) {
+                System.out.println("Errore nella creazione dell'abbonamento.");
+                em.getTransaction().rollback();
+                return;
+            }
+
+            // Commit della transazione
+            em.getTransaction().commit();
+
+            System.out.println("Abbonamento acquistato con successo!");
+            System.out.println("Dettagli abbonamento:");
+            System.out.println("Tipo: " + abbonamento.getTipo());
+            System.out.println("Data emissione: " + abbonamento.getData_inizio_validita());
+            System.out.println("Data scadenza: " + abbonamento.getData_fine_validita());
+
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            System.out.println("Errore durante l'acquisto dell'abbonamento: " + e.getMessage());
+            e.printStackTrace();
         }
-
-        System.out.println("Le tue tessere:");
-        for (Tessera t : tessere) {
-            System.out.println("ID: " + t.getId_tessera() + " - Data emissione: " + t.getData_emissione());
-        }
-
-        System.out.print("Inserisci l'ID della tessera da usare: ");
-        Long idTessera = scanner.nextLong();
-        scanner.nextLine();
-
-        System.out.print("Inserisci l'ID del punto di emissione: ");
-        Long idPuntoEmissione = scanner.nextLong();
-        scanner.nextLine();
-
-        System.out.println("Tipo abbonamento:");
-        System.out.println("1. Settimanale");
-        System.out.println("2. Mensile");
-        System.out.print("Scelta: ");
-        int tipo = scanner.nextInt();
-        scanner.nextLine();
-
-        TipoAbbonamento tipoAbbonamento = (tipo == 1) ? TipoAbbonamento.SETTIMANALE : TipoAbbonamento.MENSILE;
-
-        Tessera tessera = gestore.getTesseraById(idTessera);
-        PuntoEmissione puntoEmissione = gestore.getPuntoEmissioneById(idPuntoEmissione);
-
-        if (tessera == null || puntoEmissione == null) {
-            System.out.println("Tessera o punto di emissione non trovati.");
-            return;
-        }
-
-        gestore.generaAbbonamento(tessera, puntoEmissione, tipoAbbonamento);
-        System.out.println("Abbonamento acquistato con successo!");
     }
-
     private static void viewCard() {
         if (loggedInUser == null) {
             System.out.println("Devi essere loggato per visualizzare le tessere.");

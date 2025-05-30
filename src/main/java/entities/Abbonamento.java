@@ -92,4 +92,16 @@ public class Abbonamento {
         return oggi.isAfter(data_inizio_validita.minusDays(1)) &&
                 oggi.isBefore(data_fine_validita.plusDays(1));
     }
+
+    @Override
+    public String toString() {
+        return "Abbonamento{" +
+                "codice_univoco=" + codice_univoco +
+                ", tipo=" + tipo +
+                ", data_inizio_validita=" + data_inizio_validita +
+                ", data_fine_validita=" + data_fine_validita +
+                ", tessera=" + tessera +
+                ", puntoEmissione=" + puntoEmissione +
+                '}';
+    }
 }
