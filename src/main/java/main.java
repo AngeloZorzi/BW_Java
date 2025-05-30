@@ -21,7 +21,7 @@ public class main {
 
     public static void main(String[] args) {
         try {
-            // Initialize JPA
+
             emf = Persistence.createEntityManagerFactory("gestionetrasporti");
             em = emf.createEntityManager();
             gestore = new Gestore(em);
@@ -36,7 +36,7 @@ public class main {
                 System.out.print("Scelta: ");
 
                 int choice = scanner.nextInt();
-                scanner.nextLine(); // consume newline
+                scanner.nextLine();
 
                 switch (choice) {
                     case 1:
@@ -102,11 +102,15 @@ public class main {
             System.out.println("4. Gestione Manutenzioni");
             System.out.println("5. Gestione Servizi");
             System.out.println("6. Valida Biglietto");
+            System.out.println("7. Crea Tessera");
+            System.out.println("8. Visualizza Tessera");
+            System.out.println("9. Visualizza Biglietti");
+            System.out.println("10.Visualizza Abbonamenti");
             System.out.println("0. Logout");
             System.out.print("Scelta: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -126,6 +130,18 @@ public class main {
                     break;
                 case 6:
                     validateTicket();
+                    break;
+                case 7:
+                    createCard();
+                    break;
+                case 8:
+                    viewCard();
+                    break;
+                case 9:
+                    viewTickets();
+                    break;
+                case 10:
+                    viewSubscriptions();
                     break;
                 case 0:
                     back = true;
@@ -151,7 +167,7 @@ public class main {
             System.out.print("Scelta: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -195,7 +211,7 @@ public class main {
             System.out.print("Scelta: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -222,17 +238,17 @@ public class main {
     private static void addVehicle() {
         System.out.println("Tipo mezzo (1. Tram, 2. Autobus):");
         int tipoChoice = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
         TipoMezzo tipoMezzo = (tipoChoice == 1) ? TipoMezzo.Tram : TipoMezzo.Autobus;
 
         System.out.println("Stato mezzo (1. In servizio, 2. In manutenzione, 3. Fuori servizio):");
         int statoChoice = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
         StatoMezzo statoMezzo = StatoMezzo.values()[statoChoice-1];
 
         System.out.print("Numero identificativo: ");
         int numeroIdentificativo = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         Mezzo mezzo = new Mezzo(tipoMezzo, statoMezzo, numeroIdentificativo);
         gestore.salvaMezzo(mezzo);
@@ -243,7 +259,7 @@ public class main {
     private static void editVehicle() {
         System.out.print("Inserisci l'ID del mezzo da modificare: ");
         Long id = scanner.nextLong();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         Mezzo mezzo = gestore.getMezzoById(id);
         if (mezzo == null) {
@@ -254,7 +270,7 @@ public class main {
         System.out.println("Tipo mezzo attuale: " + mezzo.getTipoMezzo());
         System.out.println("Cambiare tipo? (1. Tram, 2. Autobus, 0. Mantieni):");
         int tipoChoice = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
         if (tipoChoice > 0) {
             mezzo.setTipoMezzo((tipoChoice == 1) ? TipoMezzo.Tram : TipoMezzo.Autobus);
         }
@@ -262,7 +278,7 @@ public class main {
         System.out.println("Stato mezzo attuale: " + mezzo.getStatoMezzo());
         System.out.println("Cambiare stato? (1. In servizio, 2. In manutenzione, 3. Fuori servizio, 0. Mantieni):");
         int statoChoice = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
         if (statoChoice > 0) {
             mezzo.setStatoMezzo(StatoMezzo.values()[statoChoice-1]);
         }
@@ -270,7 +286,7 @@ public class main {
         System.out.println("Numero identificativo attuale: " + mezzo.getNumeroIdentificativo());
         System.out.print("Nuovo numero identificativo (0 per mantenere): ");
         int nuovoNumero = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
         if (nuovoNumero > 0) {
             mezzo.setNumeroIdentificativo(nuovoNumero);
         }
@@ -282,7 +298,7 @@ public class main {
     private static void removeVehicle() {
         System.out.print("Inserisci l'ID del mezzo da rimuovere: ");
         Long id = scanner.nextLong();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         gestore.rimuoviMezzo(id);
         System.out.println("Mezzo rimosso con successo!");
@@ -316,7 +332,7 @@ public class main {
             System.out.print("Scelta: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -377,7 +393,7 @@ public class main {
             System.out.print("Scelta: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -405,7 +421,7 @@ public class main {
         if (tipo.equalsIgnoreCase("distributore")) {
             System.out.print("Attivo (true/false): ");
             attivo = scanner.nextBoolean();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
         }
 
         gestore.creaPuntoEmissione(tipo, nome, attivo);
@@ -426,7 +442,7 @@ public class main {
     private static void manageMaintenance() {
         System.out.print("Inserisci l'ID del mezzo: ");
         Long idMezzo = scanner.nextLong();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         System.out.print("Data inizio manutenzione (YYYY-MM-DD): ");
         String inizioStr = scanner.nextLine();
@@ -448,11 +464,11 @@ public class main {
     private static void manageServices() {
         System.out.print("Inserisci l'ID del mezzo: ");
         Long idMezzo = scanner.nextLong();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         System.out.print("Inserisci l'ID della tratta: ");
         int idTratta = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         System.out.print("Data inizio servizio (YYYY-MM-DD): ");
         String inizioStr = scanner.nextLine();
@@ -476,11 +492,11 @@ public class main {
     private static void validateTicket() {
         System.out.print("Inserisci l'ID del biglietto: ");
         Long idBiglietto = scanner.nextLong();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         System.out.print("Inserisci l'ID del mezzo: ");
         Long idMezzo = scanner.nextLong();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         gestore.validaBiglietto(idBiglietto, idMezzo);
     }
@@ -515,11 +531,11 @@ public class main {
 
         System.out.print("Inserisci l'ID della tessera da usare: ");
         Long idTessera = scanner.nextLong();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         System.out.print("Inserisci l'ID del punto di emissione: ");
         Long idPuntoEmissione = scanner.nextLong();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         Tessera tessera = gestore.getTesseraById(idTessera);
         PuntoEmissione puntoEmissione = gestore.getPuntoEmissioneById(idPuntoEmissione);
@@ -552,18 +568,18 @@ public class main {
 
         System.out.print("Inserisci l'ID della tessera da usare: ");
         Long idTessera = scanner.nextLong();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         System.out.print("Inserisci l'ID del punto di emissione: ");
         Long idPuntoEmissione = scanner.nextLong();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         System.out.println("Tipo abbonamento:");
         System.out.println("1. Settimanale");
         System.out.println("2. Mensile");
         System.out.print("Scelta: ");
         int tipo = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         TipoAbbonamento tipoAbbonamento = (tipo == 1) ? TipoAbbonamento.SETTIMANALE : TipoAbbonamento.MENSILE;
 
