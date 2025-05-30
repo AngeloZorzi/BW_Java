@@ -6,7 +6,6 @@ import enumerating.TipoAbbonamento;
 import jakarta.persistence.EntityManager;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 public class Gestore {
@@ -97,7 +96,7 @@ public class Gestore {
     }
 
 
-    public void generaAbbonamento(Tessera tessera, PuntoEmissione puntoEmissione, TipoAbbonamento tipoAbbonamento) {
+    public Abbonamento generaAbbonamento(Tessera tessera, PuntoEmissione puntoEmissione, TipoAbbonamento tipoAbbonamento) {
         LocalDate oggi = LocalDate.now();
         LocalDate dataFine;
 
@@ -120,6 +119,7 @@ public class Gestore {
         abbonamento.setTessera(tessera);
 
         abbonamentoDAO.salva(abbonamento);
+        return abbonamento;
     }
 
     public List<Abbonamento> getAbbonamentiByTessera(Long tesseraId) {
