@@ -7,7 +7,11 @@
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/***" />
             <property name="javax.persistence.jdbc.user" value="postgres" />
+<<<<<<< Updated upstream
             <property name="javax.persistence.jdbc.password" value="***!"/>
+=======
+            <property name="javax.persistence.jdbc.password" value="MLGproskills1!"/>
+>>>>>>> Stashed changes
             <property name="hibernate.default_schema" value="public" />
             <property name="hibernate.hbm2ddl.auto" value="update" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
