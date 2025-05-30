@@ -14,10 +14,8 @@ public class UtenteDAO {
         this.em = em;
     }
 
-    public void salva(Utente utente) {
-        em.getTransaction().begin();
+    public void save(Utente utente) {
         em.persist(utente);
-        em.getTransaction().commit();
     }
 
     public Utente trovaPerId(Long id) {
@@ -28,4 +26,14 @@ public class UtenteDAO {
         TypedQuery<Utente> query = em.createQuery("SELECT u FROM Utente u", Utente.class);
         return query.getResultList();
     }
+    public Utente trovaPerEmailPassword(String email, String password) {
+        TypedQuery<Utente> query = em.createQuery(
+                "SELECT u FROM Utente u WHERE u.email = :email AND u.password = :password", Utente.class);
+        query.setParameter("email", email);
+        query.setParameter("password", password);
+
+        List<Utente> results = query.getResultList();
+        return results.isEmpty() ? null : results.get(0);
+    }
 }
+
