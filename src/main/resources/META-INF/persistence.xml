@@ -8,7 +8,11 @@
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/***" />
             <property name="javax.persistence.jdbc.user" value="postgres" />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             <property name="javax.persistence.jdbc.password" value="***!"/>
+=======
+            <property name="javax.persistence.jdbc.password" value="MLGproskills1!"/>
+>>>>>>> Stashed changes
 =======
             <property name="javax.persistence.jdbc.password" value="MLGproskills1!"/>
 >>>>>>> Stashed changes
